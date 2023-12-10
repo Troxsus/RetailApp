@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+option csharp_namespace = "RetailApp.OrderService.Protos";
+
+package OrderContract;
+
+service OrderContract {
+
+	rpc GetOrderById(OrderIdRequest) returns (OrderReply);
+
+    rpc GetUserOrders(OrderIdRequest) returns (OrderReplyList);
+
+    rpc CreateOrder(OrderCreateRequest) returns (OrderBoolReply);
+
+    rpc UpdateOrder(OrderUpdateRequest) returns (OrderBoolReply);
+
+    rpc DeleteOrder(OrderIdRequest) returns (OrderBoolReply);
+}
+
+message OrderIdRequest {
+    string Id = 1;
+}
+
+message OrderCreateRequest {
+    double TotalPrice = 1;
+    string Status = 2;
+    string UserId = 3;
+    repeated OrderProduct Products = 4;
+}
+
+message OrderUpdateRequest {
+    string Id = 1;
+    string Status = 2;
+}
+
+message OrderReply {
+    string OrderId = 1;
+    double TotalPrice = 2;
+    string Status = 3;
+    string UserId = 4;
+    OrderProductList Products = 5;
+}
+
+message OrderProductList {
+    repeated OrderProduct Products = 1;
+}
+
+message OrderReplyList {
+    repeated OrderReply Orders = 1;
+}
+
+message OrderBoolReply {
+    bool IsSuccess = 1;
+}
+
+message OrderProduct {
+    string Id = 1;
+    string Name = 2;
+    string Description = 3;
+    double Price = 4;
+    string Category = 5;
+}
