@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper;
 using RetailApp.Data.Repository.Interfaces;
 
 namespace RetailApp.BAL.Providers
 {
     public abstract class BaseProvider<T> where T : class
     {
-        protected readonly IDbContextRepository<T> _repository;
+        protected readonly IMapper _mapper;
+        protected IDbContextRepository<T> _repository;
 
-        public BaseProvider(IDbContextRepository<T> repository)
+        public BaseProvider(IMapper mapper)
         {
-            _repository = repository;
+            _mapper = mapper;
         }
 
         protected IQueryable<T> GetAll()

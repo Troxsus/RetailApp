@@ -5,7 +5,7 @@ namespace RetailApp.BAL.Models
 {
     public class OrderTransferModel
     {
-        public Guid Id { get; set; }
+        public Guid OrderId { get; set; }
 
         public decimal TotalPrice { get; set; }
 
@@ -13,6 +13,6 @@ namespace RetailApp.BAL.Models
 
         public Guid UserId { get; set; }
 
-        public IEnumerable<ProductTransferModel> Products { get; set; }
+        public IList<ProductTransferModel> Products { get; set; }
     }
 }

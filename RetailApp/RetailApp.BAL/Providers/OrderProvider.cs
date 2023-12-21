@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using RetailApp.Data.Models.Enums;
 using RetailApp.Data.Models;
-using RetailApp.Data.Repository.Interfaces;
 using RetailApp.BAL.Providers.Interfaces;
 using RetailApp.BAL.Models;
-using RetailApp.BAL.Mappers;
+using RetailApp.Data.Providers.Interfaces;
 
 namespace RetailApp.BAL.Providers
 {
     public class OrderProvider : BaseProvider<Order>, IOrderProvider
     {
-        public OrderProvider(IDbContextRepository<Order> repository)
-            : base(repository)
-        { }
+        public OrderProvider(IMapper mapper, IDbRepositoryProvider provider)
+            : base(mapper)
+        {
+            _repository = provider.GetRepository<Order>();
+        }
 
         public IEnumerable<OrderTransferModel> GetUserOrders(string userId)
         {
@@ -25,7 +27,7 @@ namespace RetailApp.BAL.Providers
                 base.GetAll()
                 .Where(x => x.UserId == userIdAsGuid)
                 .Include(x => x.Products)
-                .Select(x => OrderMapper.MapToOrderTransferModel(x))
+                .Select(x => _mapper.Map<OrderTransferModel>(x))
                 .ToList();
 
             return userOrders;
@@ -33,15 +35,19 @@ namespace RetailApp.BAL.Providers
 
         public OrderTransferModel GetOrderById(string orderId)
         {
-            var order = base.GetById(orderId);
+            var idAsGuid = Guid.Parse(orderId);
+            var order = 
+                base.GetAll()
+                .Where(x => x.OrderId == idAsGuid)
+                .Include(x => x.Products)
+                .FirstOrDefault();
 
-            return OrderMapper.MapToOrderTransferModel(order);
+            return _mapper.Map<OrderTransferModel>(order);
         }
 
         public bool CreateOrder(OrderCreateModel request)
         {
-            var ignoreCase = true;
-            var orderToCreate = OrderMapper.MapToDbOrder(request, ignoreCase);
+            var orderToCreate = _mapper.Map<Order>(request);
             
             base.Create(orderToCreate);
 
@@ -50,7 +56,7 @@ namespace RetailApp.BAL.Providers
 
         public bool UpdateOrder(OrderUpdateModel orderToUpdate)
         {
-            var order = _repository.GetById(orderToUpdate.Id);
+            var order = _repository.GetById(orderToUpdate.OrderId);
             order.Status = Enum.Parse<OrderStatus>(orderToUpdate.Status, true);
 
             base.Update(order);

@@ -5,6 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RetailApp.BAL.Extensions;
+using RetailApp.BAL.MapperConfigs;
+using RetailApp.Data.ConfigOptions;
+using RetailApp.ProductService.MapperConfig;
 
 namespace RetailApp.ProductService
 {
@@ -21,6 +24,15 @@ namespace RetailApp.ProductService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(config => 
+            {
+                config.AddProfile<ProductGrpcProfile>();
+                config.AddProfile<ProductProfile>();
+            });
+
+            services.Configure<ConnectionStringOptions>(Configuration.GetSection("ConnectionStrings"));
+            services.Configure<RepositoryOptions>(Configuration.GetSection("ContextOptions"));
+
             services.AddBalDependencies(Configuration.GetValue<string>("ConnectionStrings:RetailApp"));
 
             services.AddGrpc();
