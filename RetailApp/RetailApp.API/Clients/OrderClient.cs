@@ -6,11 +6,11 @@ using Microsoft.Extensions.Options;
 using Grpc.Net.Client;
 using AutoMapper;
 using RetailApp.OrderService.Protos;
-using RetailApp.API.GrpcClients.Interfaces;
+using RetailApp.API.Clients.Interfaces;
 using RetailApp.API.Models;
 using RetailApp.API.Models.ConfigOptions;
 
-namespace RetailApp.API.GrpcClients
+namespace RetailApp.API.Clients
 {
     public class OrderClient : IOrderClient
     {

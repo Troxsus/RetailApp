@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using AutoMapper;
-using Google.Protobuf.Collections;
 using RetailApp.API.Models;
 using RetailApp.OrderService.Protos;
 

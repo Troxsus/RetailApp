@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RetailApp.API.GrpcClients;
-using RetailApp.API.GrpcClients.Interfaces;
+using RetailApp.API.Clients;
+using RetailApp.API.Clients.Interfaces;
 using RetailApp.API.MapperConfigs;
 using RetailApp.API.Models.ConfigOptions;
 

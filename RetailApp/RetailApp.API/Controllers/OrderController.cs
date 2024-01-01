@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RetailApp.API.GrpcClients.Interfaces;
+using RetailApp.API.Clients.Interfaces;
 using RetailApp.API.Models;
 
 namespace RetailApp.API.Controllers

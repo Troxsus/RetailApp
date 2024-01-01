@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Options;
-using RetailApp.API.GrpcClients.Interfaces;
+using RetailApp.API.Clients.Interfaces;
 using RetailApp.API.Models;
 using RetailApp.API.Models.ConfigOptions;
 using RetailApp.ProductService.Protos;
 
-namespace RetailApp.API.GrpcClients
+namespace RetailApp.API.Clients
 {
     public class ProductClient : IProductClient
     {

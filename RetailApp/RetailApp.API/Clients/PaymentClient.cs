@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Grpc.Net.Client;
 using RetailApp.PaymentService.Protos;
-using RetailApp.API.GrpcClients.Interfaces;
+using RetailApp.API.Clients.Interfaces;
 using RetailApp.API.Models;
 using RetailApp.API.Models.ConfigOptions;
 using AutoMapper;
 
 
-namespace RetailApp.API.GrpcClients
+namespace RetailApp.API.Clients
 {
     public class PaymentClient : IPaymentClient
     {

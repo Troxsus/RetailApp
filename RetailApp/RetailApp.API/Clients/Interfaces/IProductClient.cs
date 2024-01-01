@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RetailApp.API.Models;
 
-namespace RetailApp.API.GrpcClients.Interfaces
+namespace RetailApp.API.Clients.Interfaces
 {
     public interface IProductClient
     {
