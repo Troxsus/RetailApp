@@ -6,9 +6,6 @@ namespace RetailApp.Data.Database
 {
     public class RetailAppContext : DbContext
     {
-        public RetailAppContext()
-        { }
-
         public RetailAppContext(DbContextOptions options)
             : base(options)
         { }

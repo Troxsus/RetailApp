@@ -8,6 +8,7 @@ using RetailApp.BAL.Extensions;
 using RetailApp.BAL.MapperConfigs;
 using RetailApp.PaymentService.MapperConfig;
 using RetailApp.Data.ConfigOptions;
+using RetailApp.Data.Providers;
 
 namespace RetailApp.PaymentService
 {
@@ -30,10 +31,9 @@ namespace RetailApp.PaymentService
                 config.AddProfile<PaymentProfile>();
             });
 
-            services.Configure<ConnectionStringOptions>(Configuration.GetSection("ConnectionStrings"));
-            services.Configure<RepositoryOptions>(Configuration.GetSection("ContextOptions"));
+            DbRepositoryProvider.ConnectionString = Configuration.GetValue<string>("ConnectionStrings:RetailApp");
 
-            services.AddBalDependencies(Configuration.GetValue<string>("ConnectionStrings:RetailApp"));
+            services.AddBalDependencies();
 
             services.AddGrpc();
         }

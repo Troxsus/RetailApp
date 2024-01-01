@@ -1,45 +1,36 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using RetailApp.Data.ConfigOptions;
+﻿using Microsoft.EntityFrameworkCore;
 using RetailApp.Data.ConfigOptions.Enums;
 using RetailApp.Data.Database;
-using RetailApp.Data.Providers.Interfaces;
 using RetailApp.Data.Repository;
 using RetailApp.Data.Repository.Interfaces;
 
 namespace RetailApp.Data.Providers
 {
-    public class DbRepositoryProvider : IDbRepositoryProvider
+    public static class DbRepositoryProvider
     {
-        private readonly DbContext _dbContext;
+        public static string ConnectionString = "";
 
-        public DbRepositoryProvider(IOptions<RepositoryOptions> dbContext, IOptions<ConnectionStringOptions> connectionString)
+        public static IDbContextRepository<T> GetRepository<T>(DbContextTypes contextType) where T : class
         {
-            _dbContext = GetDbContext(dbContext.Value.ContextType, connectionString);
+            var dbContext = GetDbContext(contextType);
+            return new DbContextRepository<T>(dbContext);
         }
 
-        public IDbContextRepository<T> GetRepository<T>() where T : class
-        {
-            return new DbContextRepository<T>(_dbContext);
-        }
-
-        private DbContext GetDbContext(string contextType, IOptions<ConnectionStringOptions> connectionString)
+        private static DbContext GetDbContext(DbContextTypes contextType)
         {
             DbContext context;
 
-            var parseResult = Enum.TryParse<DbContextTypes>(contextType, out var contextTypeAsEnum);
             var optionsBuilder = new DbContextOptionsBuilder();
             DbContextOptions options;
-
-            switch (contextTypeAsEnum)
+            
+            switch (contextType)
             {
                 case DbContextTypes.RetailApp:
-                    options = optionsBuilder.UseSqlServer(connectionString.Value.RetailApp).Options;
+                    options = optionsBuilder.UseSqlServer(ConnectionString).Options;
                     context = new RetailAppContext(options);
                     break;
                 default:
-                    options = optionsBuilder.UseSqlServer(connectionString.Value.RetailApp).Options;
+                    options = optionsBuilder.UseSqlServer(ConnectionString).Options;
                     context = new RetailAppContext(options);
                     break;
             }

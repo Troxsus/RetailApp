@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RetailApp.BAL.Extensions;
 using RetailApp.BAL.MapperConfigs;
-using RetailApp.Data.ConfigOptions;
+using RetailApp.Data.Providers;
 using RetailApp.OrderService.MapperConfig;
 
 namespace RetailApp.OrderService
@@ -31,10 +31,9 @@ namespace RetailApp.OrderService
                 config.AddProfile<ProductProfile>();
             });
 
-            services.Configure<ConnectionStringOptions>(Configuration.GetSection("ConnectionStrings"));
-            services.Configure<RepositoryOptions>(Configuration.GetSection("ContextOptions"));
+            DbRepositoryProvider.ConnectionString = Configuration.GetValue<string>("ConnectionStrings:RetailApp");
 
-            services.AddBalDependencies(Configuration.GetValue<string>("ConnectionStrings:RetailApp"));
+            services.AddBalDependencies();
 
             services.AddGrpc();
         }

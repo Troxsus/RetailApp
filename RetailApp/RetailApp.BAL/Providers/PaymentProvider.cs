@@ -5,17 +5,14 @@ using AutoMapper;
 using RetailApp.Data.Models;
 using RetailApp.BAL.Models;
 using RetailApp.BAL.Providers.Interfaces;
-using RetailApp.Data.Providers.Interfaces;
 
 namespace RetailApp.BAL.Providers
 {
     public class PaymentProvider : BaseProvider<Payment>, IPaymentProvider
     {
-        public PaymentProvider(IMapper mapper, IDbRepositoryProvider provider)
+        public PaymentProvider(IMapper mapper)
             : base(mapper)
-        {
-            _repository = provider.GetRepository<Payment>();
-        }
+        { }
 
         public IEnumerable<PaymentTransferModel> GetUserPayments(string userId)
         {

@@ -7,18 +7,15 @@ using RetailApp.Data.Models.Enums;
 using RetailApp.Data.Models;
 using RetailApp.BAL.Providers.Interfaces;
 using RetailApp.BAL.Models;
-using RetailApp.Data.Providers.Interfaces;
 
 namespace RetailApp.BAL.Providers
 {
     public class OrderProvider : BaseProvider<Order>, IOrderProvider
     {
-        public OrderProvider(IMapper mapper, IDbRepositoryProvider provider)
+        public OrderProvider(IMapper mapper)
             : base(mapper)
-        {
-            _repository = provider.GetRepository<Order>();
-        }
-
+        { }
+        
         public IEnumerable<OrderTransferModel> GetUserOrders(string userId)
         {
             var userIdAsGuid = Guid.Parse(userId);

@@ -4,17 +4,14 @@ using AutoMapper;
 using RetailApp.Data.Models;
 using RetailApp.BAL.Models;
 using RetailApp.BAL.Providers.Interfaces;
-using RetailApp.Data.Providers.Interfaces;
 
 namespace RetailApp.BAL.Providers
 {
     public class ProductProvider : BaseProvider<Product>, IProductProvider
     {
-        public ProductProvider(IMapper mapper, IDbRepositoryProvider provider)
+        public ProductProvider(IMapper mapper)
             : base(mapper)
-        {
-            _repository = provider.GetRepository<Product>();
-        }
+        { }
 
         public IEnumerable<ProductTransferModel> GetProducts()
         {
