@@ -15,21 +15,21 @@ namespace RetailApp.API.Clients
     public class OrderClient : IOrderClient
     {
         private readonly IMapper _mapper;
-        private readonly OrderContract.OrderContractClient _orderGrpcClient;
+        private readonly OrderContract.OrderContractClient _orderClient;
 
         public OrderClient(IMapper mapper, IOptions<ServiceAddressOptions> addressOptions)
         {
             _mapper = mapper;
 
             var channel = GrpcChannel.ForAddress(addressOptions.Value.OrderServiceAddress);
-            _orderGrpcClient = new OrderContract.OrderContractClient(channel);
+            _orderClient = new OrderContract.OrderContractClient(channel);
         }
 
         public async Task<IEnumerable<OrderDisplay>> GetUserOrders(Guid userId)
         {
             var request = new OrderIdRequest { Id = userId.ToString() };
 
-            var response = await _orderGrpcClient.GetUserOrdersAsync(request);
+            var response = await _orderClient.GetUserOrdersAsync(request);
 
             var orders = response.Orders.Select(x => _mapper.Map<OrderDisplay>(x));
 
@@ -40,7 +40,7 @@ namespace RetailApp.API.Clients
         {
             var request = new OrderIdRequest { Id = orderId.ToString() };
 
-            var response = await _orderGrpcClient.GetOrderByIdAsync(request);
+            var response = await _orderClient.GetOrderByIdAsync(request);
 
             return _mapper.Map<OrderDisplay>(response);
         }
@@ -49,7 +49,7 @@ namespace RetailApp.API.Clients
         {
             var request = _mapper.Map<OrderCreateRequest>(orderInfo);
             
-            var response = await _orderGrpcClient.CreateOrderAsync(request);
+            var response = await _orderClient.CreateOrderAsync(request);
             
             return response.IsSuccess;
         }
@@ -58,7 +58,7 @@ namespace RetailApp.API.Clients
         {
             var request = _mapper.Map<OrderUpdateRequest>(orderInfo);
 
-            var response = await _orderGrpcClient.UpdateOrderAsync(request);
+            var response = await _orderClient.UpdateOrderAsync(request);
 
             return response.IsSuccess;
         }
@@ -67,7 +67,7 @@ namespace RetailApp.API.Clients
         {
             var request = new OrderIdRequest { Id = orderId.ToString() };
 
-            var response = await _orderGrpcClient.DeleteOrderAsync(request);
+            var response = await _orderClient.DeleteOrderAsync(request);
 
             return response.IsSuccess;
         }
