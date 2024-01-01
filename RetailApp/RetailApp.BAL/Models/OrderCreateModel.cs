@@ -11,6 +11,6 @@ namespace RetailApp.BAL.Models
 
         public Guid UserId { get; set; }
 
-        public IEnumerable<ProductTransferModel> Products { get; set; }
+        public IList<ProductTransferModel> Products { get; set; }
     }
 }

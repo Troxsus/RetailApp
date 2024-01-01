@@ -1,16 +1,26 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper;
+using RetailApp.Data.ConfigOptions.Enums;
 using RetailApp.Data.Repository.Interfaces;
+using RetailApp.BAL.Providers.Interfaces;
+using RetailApp.Data.Providers;
 
 namespace RetailApp.BAL.Providers
 {
-    public abstract class BaseProvider<T> where T : class
+    public abstract class BaseProvider<T> : IProvider where T : class
     {
-        protected readonly IDbContextRepository<T> _repository;
+        protected readonly IMapper _mapper;
+        protected IDbContextRepository<T> _repository;
 
-        public BaseProvider(IDbContextRepository<T> repository)
+        public BaseProvider(IMapper mapper)
         {
-            _repository = repository;
+            _mapper = mapper;
+        }
+
+        public void ConfigureProviderRepository(DbContextTypes contextTypes)
+        {
+            _repository = DbRepositoryProvider.GetRepository<T>(contextTypes);
         }
 
         protected IQueryable<T> GetAll()

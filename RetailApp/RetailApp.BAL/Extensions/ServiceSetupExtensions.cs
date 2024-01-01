@@ -7,9 +7,9 @@ namespace RetailApp.BAL.Extensions
 {
     public static class ServiceSetupExtensions
     {
-        public static void AddBalDependencies(this IServiceCollection services, string connectionString)
+        public static void AddBalDependencies(this IServiceCollection services)
         {
-            services.AddDataDependencies(connectionString);
+            services.AddDataDependencies();
 
             services.AddScoped<IOrderProvider, OrderProvider>();
             services.AddScoped<IPaymentProvider, PaymentProvider>();

@@ -3,7 +3,7 @@ using RetailApp.BAL.Models;
 
 namespace RetailApp.BAL.Providers.Interfaces
 {
-    public interface IProductProvider
+    public interface IProductProvider : IProvider
     {
         IEnumerable<ProductTransferModel> GetProducts();
 

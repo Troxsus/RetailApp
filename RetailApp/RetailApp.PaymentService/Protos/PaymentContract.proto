@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option csharp_namespace = "RetailApp.PaymentService.Protos";
+
+package PaymentContract;
+
+service PaymentContract {
+
+	rpc GetUserPayments(PaymentIdRequest) returns (PaymentListReply);
+
+    rpc GetPaymentById(PaymentIdRequest) returns (PaymentReply);
+
+    rpc CreatePayment(PaymentCreateRequest) returns (PaymentCreateReply);
+}
+
+message PaymentIdRequest {
+    string Id = 1;
+}
+
+message PaymentReply {
+    string PaymentId = 1;
+    double Price = 2;
+    string CreatedOn = 3;
+    string UserId = 4;
+    string OrderId = 5;
+}
+
+message PaymentListReply {
+    repeated PaymentReply Payments = 1;
+}
+
+message PaymentCreateRequest {
+    double Price = 1;
+    string CreatedOn = 2;
+    string UserId = 3;
+    string OrderId = 4;
+}
+
+message PaymentCreateReply {
+    bool isSuccess = 1;
+}

@@ -4,7 +4,7 @@ namespace RetailApp.BAL.Models
 {
     public class PaymentTransferModel
     {
-        public Guid Id { get; set; }
+        public Guid PaymentId { get; set; }
 
         public decimal Price { get; set; }
 

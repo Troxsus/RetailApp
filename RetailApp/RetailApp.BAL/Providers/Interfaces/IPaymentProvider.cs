@@ -3,7 +3,7 @@ using RetailApp.BAL.Models;
 
 namespace RetailApp.BAL.Providers.Interfaces
 {
-    public interface IPaymentProvider
+    public interface IPaymentProvider : IProvider
     {
         IEnumerable<PaymentTransferModel> GetUserPayments(string userId);
 
